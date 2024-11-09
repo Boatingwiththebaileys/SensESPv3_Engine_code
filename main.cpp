@@ -103,28 +103,67 @@ void setup() {
                     //->set_sk_server("192.168.10.3", 80)
                     ->get_app();
 
-  
-/// 1-Wire Temp Sensors - Exhaust Temp Sensors ///
+///  1-Wire Temp Sensors ///
+/// Exhaust Temp Sensors ///
 
   DallasTemperatureSensors* dts = new DallasTemperatureSensors(17);
 
   auto* exhaust_temp =
       new OneWireTemperature(dts, 1000, "/Exhaust Temperature/oneWire");
 
-  exhaust_temp->connect_to(new Linear(1.0, 0.0, "/Exhaust Temperature/linear"))
-      ->connect_to(
-          new SKOutputFloat("propulsion.engine.exhaustTemperature",
-                             "/Exhaust Temperature/sk_path"));
+    ConfigItem(exhaust_temp)
+      ->set_title("Exhaust Temperature")
+      ->set_description("Temperature of the engine exhaust")
+      ->set_sort_order(100);
 
-/// 1-Wire Temp Sensors - Oil Temp Sensors ///
+    auto exhaust_temp_calibration =
+      new Linear(1.0, 0.0, "/Exhaust_Temperature/linear");
+
+    ConfigItem(exhaust_temp_calibration)
+      ->set_title("Exhaust Temperature Calibration")
+      ->set_description("Calibration for the exhaust temperature sensor")
+      ->set_sort_order(200);
+
+    auto exhaust_temp_sk_output = new SKOutputFloat(
+      "propulsion.engine.exhaustTemperature", "/Exhaust_Temperature/skPath");
+     
+     ConfigItem(exhaust_temp_sk_output)
+      ->set_title("Exhaust Temperature Signal K Path")
+      ->set_description("Signal K path for the exhaust temperature")
+      ->set_sort_order(300);
+
+    exhaust_temp->connect_to(exhaust_temp_calibration)
+      ->connect_to(exhaust_temp_sk_output);
+
+/// Oil Temp Sensors ///
 
   auto* oil_temp =
       new OneWireTemperature(dts, 1000, "/Oil Temperature/oneWire");
 
-  oil_temp->connect_to(new Linear(1.0, 0.0, "/Oil Temperature/linear"))
-      ->connect_to(
-          new SKOutputFloat("propulsion.engine.oilTemperature",
-                             "/Oil Temperature/sk_path"));
+    ConfigItem(oil_temp)
+      ->set_title("Oil Temperature")
+      ->set_description("Temperature of the engine oil")
+      ->set_sort_order(100);
+
+    auto oil_temp_calibration =
+      new Linear(1.0, 0.0, "/oil_Temperature/linear");
+
+    ConfigItem(oil_temp_calibration)
+      ->set_title("Oil Temperature Calibration")
+      ->set_description("Calibration for the oil temperature sensor")
+      ->set_sort_order(200);
+
+    auto oil_temp_sk_output = new SKOutputFloat(
+      "propulsion.engine.oilTemperature", "/oil_Temperature/skPath");
+     
+     ConfigItem(oil_temp_sk_output)
+      ->set_title("Oil Temperature Signal K Path")
+      ->set_description("Signal K path for the oil temperature")
+      ->set_sort_order(300);
+
+    oil_temp->connect_to(oil_temp_calibration)
+      ->connect_to(oil_temp_sk_output);
+
 
  //RPM Application/////
 
