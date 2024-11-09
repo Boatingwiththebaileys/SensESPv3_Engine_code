@@ -112,8 +112,8 @@ void setup() {
       new OneWireTemperature(dts, 1000, "/Exhaust Temperature/oneWire");
 
     ConfigItem(exhaust_temp)
-      ->set_title("Exhaust Temperature")
-      ->set_description("Temperature of the engine exhaust")
+      ->set_title("Exhaust Temperature Sender")
+      ->set_description("Device ID of the engine exhaust sender")
       ->set_sort_order(100);
 
     auto exhaust_temp_calibration =
@@ -137,12 +137,12 @@ void setup() {
 
 /// Oil Temp Sensors ///
 
-  auto* oil_temp =
+  auto oil_temp =
       new OneWireTemperature(dts, 1000, "/Oil Temperature/oneWire");
 
     ConfigItem(oil_temp)
-      ->set_title("Oil Temperature")
-      ->set_description("Temperature of the engine oil")
+      ->set_title("Oil Temperature Sender")
+      ->set_description("Device ID of the engine oil sender")
       ->set_sort_order(100);
 
     auto oil_temp_calibration =
