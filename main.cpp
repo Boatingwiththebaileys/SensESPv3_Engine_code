@@ -11,6 +11,7 @@
 // SensESP v3 Engine monitor - Nov 2024 (UNTESTED ON V3)
 
 #include <memory>
+#include <Arduino.h>
 
 #include <Adafruit_BMP280.h>
 #include <Wire.h>
